@@ -1,6 +1,6 @@
 # Introduction
 
-GitHub Actions for use by the Divvun CI system.
+A separate repo where new github actions can be tested before modifying (and potentially breaking) the [real repo](https://github.com/divvun/taskcluster-gha).
 
 # Building
 
