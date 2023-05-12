@@ -11,7 +11,7 @@ class Autotools {
     }
 
     async helloWorld() {
-        await Bash.runScript("echo 'HELLO WORLD!", { cwd: this.directory })
+        await Bash.runScript("echo HELLO_WORLD!", { cwd: this.directory })
     }
 
     async makeBuildDir() {

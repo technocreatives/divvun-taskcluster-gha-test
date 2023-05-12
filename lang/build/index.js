@@ -31,6 +31,9 @@ class Autotools {
     constructor(directory) {
         this.directory = directory;
     }
+    async helloWorld() {
+        await shared_1.Bash.runScript("echo HELLO_WORLD!", { cwd: this.directory });
+    }
     async makeBuildDir() {
         await shared_1.Bash.runScript("mkdir -p build", { cwd: this.directory });
     }
@@ -44,6 +47,7 @@ class Autotools {
         await shared_1.Bash.runScript("make -j$(nproc)", { cwd: path.join(this.directory, "build") });
     }
     async build(flags) {
+        await this.helloWorld();
         await this.makeBuildDir();
         await this.runAutogen();
         await this.runConfigure(flags);
