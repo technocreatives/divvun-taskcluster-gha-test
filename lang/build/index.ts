@@ -10,6 +10,10 @@ class Autotools {
         this.directory = directory
     }
 
+    async helloWorld() {
+        await Bash.runScript("echo 'HELLO WORLD!", { cwd: this.directory })
+    }
+
     async makeBuildDir() {
         await Bash.runScript("mkdir -p build", { cwd: this.directory })
     }
@@ -27,6 +31,7 @@ class Autotools {
     }
 
     async build(flags: string[]) {
+        await this.helloWorld()
         await this.makeBuildDir()
         await this.runAutogen()
         await this.runConfigure(flags)
