@@ -776,7 +776,7 @@ function isMatchingTag(tagPattern) {
 }
 exports.isMatchingTag = isMatchingTag;
 async function getArtifactSize(artifactPath) {
-    const cmd = `wc -c ${artifactPath} | awk '{print $1}`;
+    const cmd = `wc -c ${artifactPath} | awk '{print $1}'`;
     let resp = await Bash.runScript(cmd);
     let size = +resp[0] || 0;
     return size;
