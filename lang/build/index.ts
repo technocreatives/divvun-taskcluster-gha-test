@@ -67,6 +67,7 @@ function deriveInputs(inputs: string[]): { [key: string]: any } {
 
 async function run() {
     const githubWorkspace = process.env.GITHUB_WORKSPACE
+    console.log(`GITHUB_WORKSPACE: ${githubWorkspace}`)
 
     if (githubWorkspace == null) {
         core.setFailed("GITHUB_WORKSPACE not set, failing.")
@@ -181,8 +182,8 @@ async function run() {
         } = {
             mobile: {},
             desktop: {}
-        } 
-        
+        }
+
         const globber = await glob.create(path.join(githubWorkspace, "lang/build/tools/spellcheckers/*.zhfst"), {
             followSymbolicLinks: false
         })
