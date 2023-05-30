@@ -105,8 +105,10 @@ async function run() {
     core.exportVariable("DIVVUN_CI_CONFIG", divvunConfigDir())
     core.debug(divvunConfigDir())
   }
-  catch (error: any) {
-    core.setFailed(error.message);
+  catch (error) {
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    }
   }
 }
 

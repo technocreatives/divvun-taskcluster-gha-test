@@ -8,7 +8,7 @@ const path_1 = __importDefault(require("path"));
 const inno_1 = require("../../inno");
 const shared_1 = require("../../shared");
 const uuid_1 = require("uuid");
-const KBDGEN_NAMESPACE = (0, uuid_1.v5)("divvun.no", uuid_1.v5.DNS);
+const KBDGEN_NAMESPACE = uuid_1.v5("divvun.no", uuid_1.v5.DNS);
 function layoutTarget(layout) {
     const targets = layout["targets"] || {};
     return targets["windows"] || {};
@@ -56,7 +56,7 @@ function addLayoutToInstaller(builder, locale, layout) {
     const languageCode = target["locale"] || locale;
     const languageName = target["languageName"];
     const layoutDisplayName = layout["displayNames"][locale];
-    const guidStr = (0, uuid_1.v5)(kbdId, KBDGEN_NAMESPACE);
+    const guidStr = uuid_1.v5(kbdId, KBDGEN_NAMESPACE);
     if (!layoutDisplayName) {
         throw new Error(`Display name for ${locale} not found`);
     }

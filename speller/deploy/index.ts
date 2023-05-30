@@ -154,8 +154,10 @@ async function run() {
 
         await PahkatUploader.upload(artifactPath, artifactUrl, "./metadata.toml", repoPackageUrl)
     }
-    catch (error: any) {
-        core.setFailed(error.message);
+    catch (error) {
+        if (error instanceof Error) {
+            core.setFailed(error.message);
+        }
     }
 }
 

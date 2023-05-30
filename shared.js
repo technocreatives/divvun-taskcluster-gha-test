@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -18,7 +14,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -105,18 +101,18 @@ function assertExit0(code) {
 class Apt {
     static async update(requiresSudo) {
         if (requiresSudo) {
-            assertExit0(await (0, exec_1.exec)("sudo", ["apt-get", "-qy", "update"], { env: env() }));
+            assertExit0(await exec_1.exec("sudo", ["apt-get", "-qy", "update"], { env: env() }));
         }
         else {
-            assertExit0(await (0, exec_1.exec)("apt-get", ["-qy", "update"], { env: env() }));
+            assertExit0(await exec_1.exec("apt-get", ["-qy", "update"], { env: env() }));
         }
     }
     static async install(packages, requiresSudo) {
         if (requiresSudo) {
-            assertExit0(await (0, exec_1.exec)("sudo", ["apt-get", "install", "-qfy", ...packages], { env: env() }));
+            assertExit0(await exec_1.exec("sudo", ["apt-get", "install", "-qfy", ...packages], { env: env() }));
         }
         else {
-            assertExit0(await (0, exec_1.exec)("apt-get", ["install", "-qfy", ...packages], { env: env() }));
+            assertExit0(await exec_1.exec("apt-get", ["install", "-qfy", ...packages], { env: env() }));
         }
     }
 }
@@ -124,10 +120,10 @@ exports.Apt = Apt;
 class Pip {
     static async install(packages, requiresSudo) {
         if (requiresSudo) {
-            assertExit0(await (0, exec_1.exec)("sudo", ["pip3", "install", ...packages], { env: env() }));
+            assertExit0(await exec_1.exec("sudo", ["pip3", "install", ...packages], { env: env() }));
         }
         else {
-            assertExit0(await (0, exec_1.exec)("pip3", ["install", ...packages], { env: env() }));
+            assertExit0(await exec_1.exec("pip3", ["install", ...packages], { env: env() }));
         }
     }
 }
@@ -145,7 +141,7 @@ class Powershell {
                 err.push(data.toString());
             }
         };
-        assertExit0(await (0, exec_1.exec)("pwsh", ["-c", script], { env: thisEnv, cwd: opts.cwd, listeners }));
+        assertExit0(await exec_1.exec("pwsh", ["-c", script], { env: thisEnv, cwd: opts.cwd, listeners }));
         return [out.join(""), err.join("")];
     }
 }
@@ -175,10 +171,10 @@ class Bash {
             }
         };
         if (args.sudo) {
-            assertExit0(await (0, exec_1.exec)("sudo", ["bash", "-c", script], { env: thisEnv, cwd: args.cwd, listeners }));
+            assertExit0(await exec_1.exec("sudo", ["bash", "-c", script], { env: thisEnv, cwd: args.cwd, listeners }));
         }
         else {
-            assertExit0(await (0, exec_1.exec)("bash", ["-c", script], { env: thisEnv, cwd: args.cwd, listeners }));
+            assertExit0(await exec_1.exec("bash", ["-c", script], { env: thisEnv, cwd: args.cwd, listeners }));
         }
         return [out.join(""), err.join("")];
     }
@@ -209,7 +205,7 @@ class Tar {
         else if (platform === "win32") {
             await Tar.bootstrap();
             core.debug("Attempt to unxz");
-            await (0, exec_1.exec)("xz", ["-d", filePath]);
+            await exec_1.exec("xz", ["-d", filePath]);
             core.debug("Attempted to extract tarball");
             return await tc.extractTar(`${path_1.default.dirname(filePath)}\\${path_1.default.basename(filePath, ".txz")}.tar`, outputDir || tmpDir());
         }
@@ -234,8 +230,8 @@ class Tar {
         await io.cp(path_1.default.join(tmpDir.name, "file.tar.xz"), outputPath);
     }
 }
-Tar.URL_XZ_WINDOWS = "https://tukaani.org/xz/xz-5.2.5-windows.zip";
 exports.Tar = Tar;
+Tar.URL_XZ_WINDOWS = "https://tukaani.org/xz/xz-5.2.5-windows.zip";
 var RebootSpec;
 (function (RebootSpec) {
     RebootSpec["Install"] = "install";
@@ -292,10 +288,10 @@ class PahkatPrefix {
         }
     }
 }
+exports.PahkatPrefix = PahkatPrefix;
 PahkatPrefix.URL_LINUX = "https://pahkat.uit.no/devtools/download/pahkat-prefix-cli?platform=linux&channel=nightly";
 PahkatPrefix.URL_MACOS = "https://pahkat.uit.no/devtools/download/pahkat-prefix-cli?platform=macos&channel=nightly";
 PahkatPrefix.URL_WINDOWS = "https://pahkat.uit.no/devtools/download/pahkat-prefix-cli?platform=windows&channel=nightly";
-exports.PahkatPrefix = PahkatPrefix;
 var MacOSPackageTarget;
 (function (MacOSPackageTarget) {
     MacOSPackageTarget["System"] = "system";
@@ -316,7 +312,7 @@ class PahkatUploader {
         else {
             exe = "pahkat-uploader";
         }
-        assertExit0(await (0, exec_1.exec)(exe, args, {
+        assertExit0(await exec_1.exec(exe, args, {
             env: Object.assign({}, env(), {
                 PAHKAT_API_KEY: sec.pahkat.apiKey
             }),
@@ -341,10 +337,10 @@ class PahkatUploader {
         const sec = await secrets();
         console.log(`Uploading ${artifactPath} to S3`);
         var retries = 0;
-        await (0, exec_1.exec)("aws", ["configure", "set", "default.s3.multipart_threshold", "500MB"]);
+        await exec_1.exec("aws", ["configure", "set", "default.s3.multipart_threshold", "500MB"]);
         while (true) {
             try {
-                await (0, exec_1.exec)("aws", ["s3", "cp", "--cli-connect-timeout", "6000", "--endpoint", "https://ams3.digitaloceanspaces.com", "--acl", "public-read", artifactPath, `s3://divvun/pahkat/artifacts/${fileName}`], {
+                await exec_1.exec("aws", ["s3", "cp", "--cli-connect-timeout", "6000", "--endpoint", "https://ams3.digitaloceanspaces.com", "--acl", "public-read", artifactPath, `s3://divvun/pahkat/artifacts/${fileName}`], {
                     env: Object.assign({}, env(), {
                         AWS_ACCESS_KEY_ID: sec.aws.accessKeyId,
                         AWS_SECRET_ACCESS_KEY: sec.aws.secretAccessKey,
@@ -410,6 +406,7 @@ class PahkatUploader {
         return args;
     }
 }
+exports.PahkatUploader = PahkatUploader;
 PahkatUploader.ARTIFACTS_URL = "https://pahkat.uit.no/artifacts/";
 PahkatUploader.release = {
     async windowsExecutable(release, artifactUrl, installSize, size, kind, productCode, requiresReboot) {
@@ -461,7 +458,6 @@ PahkatUploader.release = {
         return await PahkatUploader.run([...releaseArgs, ...payloadArgs]);
     },
 };
-exports.PahkatUploader = PahkatUploader;
 const CLEAR_KNOWN_HOSTS_SH = `\
 mkdir -pv ~/.ssh
 ssh-keyscan github.com | tee -a ~/.ssh/known_hosts
@@ -670,7 +666,7 @@ class DivvunBundler {
             "-f", langTag,
             ...deriveBundlerArgs(spellerPaths)
         ];
-        assertExit0(await (0, exec_1.exec)("divvun-bundler", args, {
+        assertExit0(await exec_1.exec("divvun-bundler", args, {
             env: Object.assign({}, env(), {
                 "RUST_LOG": "trace"
             })
